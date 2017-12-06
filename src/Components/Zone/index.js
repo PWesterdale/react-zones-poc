@@ -1,15 +1,34 @@
 import React, { Component } from 'react';
-import { init, addListener } from '../../zones';
+import { initHost, addListener, TYPES, confirmInteractive } from '../../zones';
+
+class InteractiveComponent extends React.Component {
+    componentDidMount() {
+        confirmInteractive(this.props.zone, this.node);
+    }
+    shouldComponentUpdate() {
+        return false;
+    }
+    render() {
+        return <div ref={(node) => {this.node = node}} />
+    }
+}
 
 export default class Zone extends Component {
     componentDidMount() {
-        init(this, this.props.zone);
+        initHost(this.props.zone, this);
     }
     render() {
-        return (
-            this.zone && this.zone.children ? this.zone.children.map((child) => {
-                return <child.c key={child.key} {...this.props} />
-            }) : null
-        )
+        if(!this.zone) return null;
+        return this.zone.children.reduce((acc, child) => {
+            switch(child.type) {
+                case TYPES.COMPONENT:
+                    acc.push(<child.c key={child.key} {...this.props} />)
+                break;
+                case TYPES.INTERACTIVE:
+                    acc.push(<InteractiveComponent key={child.key} {...this.props} />)
+                break;
+            }
+            return acc;
+        }, [])
     }
 }

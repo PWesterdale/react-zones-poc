@@ -15,8 +15,5 @@ module.exports = {
             exclude: /node_modules/,
             loader: 'babel-loader'
         }]
-    },
-    externals: {
-		"react" : "React"
     }
 }

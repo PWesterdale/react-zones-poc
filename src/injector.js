@@ -1,5 +1,5 @@
 import React from 'react';
-import { onInit, add } from './zones';
+import { initInjector, add, addInteractive } from './zones';
 
 const comp = (props) => {
     return <div>I'm Injected, But I'm using props from my parent (props.extId = {props.extId})</div>;
@@ -15,10 +15,14 @@ class Nothing extends React.Component
     }
 }
 
-onInit('test')
-.then((e) => {
+initInjector('test')
+.then((res) => {
     add('test', 'injected', comp);
     setTimeout(() => {
         add('test', 'nothing', Nothing)
     }, 1000);
+    return addInteractive('test', 'clock');
+})
+.then((int) => {
+    int.innerHTML = "<h5>This is my node now.</h5>";
 })
