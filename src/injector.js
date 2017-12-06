@@ -18,11 +18,17 @@ class Nothing extends React.Component
 initInjector('test')
 .then((res) => {
     add('test', 'injected', comp);
+    return addInteractive('test', 'clock');
     setTimeout(() => {
         add('test', 'nothing', Nothing)
     }, 1000);
-    return addInteractive('test', 'clock');
 })
 .then((int) => {
-    int.innerHTML = "<h5>This is my node now.</h5>";
+    let state = false;
+    int.innerHTML = "<h5>This is my node now.</h5>"
+    setInterval(() => {
+        state = !state;
+        int.innerHTML = state ? "&#127881;&#127881;&#127881;&#127881;" : "&#127866;&#127866;&#127866;&#127866;";
+        int.style.fontSize = "32px";
+    }, 1000)
 })
