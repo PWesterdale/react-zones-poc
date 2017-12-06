@@ -2209,10 +2209,10 @@ var Nothing = function (_React$Component) {
 
 (0, _zones.initInjector)('test').then(function (res) {
     (0, _zones.add)('test', 'injected', comp);
-    return (0, _zones.addInteractive)('test', 'clock');
     setTimeout(function () {
         (0, _zones.add)('test', 'nothing', Nothing);
     }, 1000);
+    return (0, _zones.addInteractive)('test', 'clock');
 }).then(function (int) {
     var state = false;
     int.innerHTML = "<h5>This is my node now.</h5>";

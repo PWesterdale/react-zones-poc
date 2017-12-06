@@ -18,10 +18,10 @@ class Nothing extends React.Component
 initInjector('test')
 .then((res) => {
     add('test', 'injected', comp);
-    return addInteractive('test', 'clock');
     setTimeout(() => {
         add('test', 'nothing', Nothing)
     }, 1000);
+    return addInteractive('test', 'clock');
 })
 .then((int) => {
     let state = false;
